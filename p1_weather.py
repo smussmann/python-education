@@ -1,6 +1,6 @@
 import datetime
 
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, List, Tuple
 
 # Copied from https://api.openweathermap.org/data/2.5/onecall?lat=40.7127&lon=-74.0059&exclude=minutely,daily,alerts&units=imperial&appid=<appkey>
 # API Docs at https://openweathermap.org/api/one-call-api
@@ -1084,17 +1084,32 @@ data = {
 
 def low(data: Dict[str, Any]) -> Tuple[float, datetime.datetime]:
     """Return the lowest predicted temperature in `data`, and the time it occurs."""
-    pass
+    return 0, datetime.datetime.now()
 
 
 def high(data: Dict[str, Any]) -> Tuple[float, datetime.datetime]:
     """Return the highest predicted temperature in `data`, and the time it occurs."""
-    pass
+    return 0, datetime.datetime.now()
 
-def daily_high(data: Dict[str, Any]) -> Tuple[float, datetime.datetime]:
+def daily_high(data: Dict[str, Any]) -> List[Tuple[float, datetime.datetime]]:
     """For each day in `data`, return its high and the time it occurs."""
-    pass
+    return [(0, datetime.datetime.now())]
 
-def daily_low(data: Dict[str, Any]) -> Tuple[float, datetime.datetime]:
+def daily_low(data: Dict[str, Any]) -> List[Tuple[float, datetime.datetime]]:
     """For each day in `data`, return its low and the time it occurs."""
-    pass
+    return [(0, datetime.datetime.now())]
+
+if __name__ == '__main__':
+    high, at = high(data)
+    print(f'4-day high of {high} at {at}')
+
+    low, at = low(data)
+    print(f'4-day low of {low} at {at}')
+
+    daily_highs = daily_high(data)
+    for high, at in daily_highs:
+        print(f'daily high of {high} at {at}')
+
+    daily_lows = daily_low(data)
+    for low, at in daily_lows:
+        print(f'daily low of {low} at {at}')
